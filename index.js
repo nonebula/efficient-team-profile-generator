@@ -1,8 +1,3 @@
-import { Manager } from "./lib/Manager.js";
-import { Engineer } from "./lib/Engineer.js";
-import { Intern } from "./lib/Intern.js";
-import { Employee } from "./lib/Engineer.js";
-
 const Manager = require("./lib/Manager.js");
 const Engineer = require("./lib/Engineer.js");
 const Intern = require("./lib/Intern.js");
@@ -15,39 +10,33 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
 
-// TODO: Write Code to gather information about the development team members, and render the HTML file.
-
-const manager = new Manager(name, id, email, officeNumber);
-const intern = new Intern(name, id, email, school);
-const engineer = new Engineer(name, id, email, github);
-
 const questions = [
   // manager
   {
     type: "input",
-    name: "Name",
+    name: "managerName",
     message: "What's the Team Manager's name?",
   },
   {
     type: "input",
-    name: "Employee ID",
+    name: "managerId",
     message: "What's the Team Manager's employee ID?",
   },
   {
     type: "input",
-    name: "Email Address",
+    name: "managerEmail",
     message: "What's the Team Manager's email address?",
   },
   {
     type: "input",
-    name: "Office Number",
+    name: "managerOfficeNumber",
     message: "What's the Team Manager's office number?",
   },
 
   // Choose member of staff
   {
     type: "list",
-    name: "Options",
+    name: "memberType",
     message: "Choose your option:",
     choices: ["Add an Engineer", "Add an Intern", "Finish building the team"],
   },
@@ -55,63 +44,97 @@ const questions = [
   // engineer
   {
     type: "input",
-    name: "Name",
+    name: "engineerName",
     message: "What's the Engineer's name?",
+    when: (answers) => answers.memberType === "Add an Engineer",
   },
   {
     type: "input",
-    name: "Employee ID",
+    name: "engineerId",
     message: "What's the Engineer's employee ID?",
+    when: (answers) => answers.memberType === "Add an Engineer",
   },
   {
     type: "input",
-    name: "Email",
+    name: "engineerEmail",
     message: "What's the Engineer's email address?",
+    when: (answers) => answers.memberType === "Add an Engineer",
   },
   {
     type: "input",
-    name: "GitHub Username",
+    name: "engineerGithub",
     message: "What's the Engineer's GitHub Username?",
+    when: (answers) => answers.memberType === "Add an Engineer",
   },
 
   // Intern
   {
     type: "input",
-    name: "Name",
+    name: "internName",
     message: "What's the Intern's name?",
+    when: (answers) => answers.memberType === "Add an Intern",
   },
   {
     type: "input",
-    name: "Employee ID",
+    name: "internId",
     message: "What's the Intern's employee ID?",
+    when: (answers) => answers.memberType === "Add an Intern",
   },
   {
     type: "input",
-    name: "Email",
+    name: "internEmail",
     message: "What's the Intern's email address?",
+    when: (answers) => answers.memberType === "Add an Intern",
   },
   {
     type: "input",
-    name: "GitHub Username",
+    name: "internSchool",
     message: "What's the Intern's school name?",
+    when: (answers) => answers.memberType === "Add an Intern",
   },
 ];
-
-// function to write HTML file
-function writeToFile(fileName, data) {
-  const filePath = path.join(process.cwd(), fileName);
-  fs.writeFile(filePath, data, (err) =>
-    err
-      ? console.error(err)
-      : console.log(`${fileName} generated successfully!`)
-  );
-}
 
 // function to initialize program
 function init() {
   inquirer.prompt(questions).then((answers) => {
-    const htmlContent = render(answers);
-    writeToFile("team.html", htmlContent);
+    let team = [];
+
+    // Create Manager instance
+    const manager = new Manager(
+      answers.managerName,
+      answers.managerId,
+      answers.managerEmail,
+      answers.managerOfficeNumber
+    );
+    team.push(manager);
+
+    // Create Engineer instance if selected
+    if (answers.memberType === "Add an Engineer") {
+      const engineer = new Engineer(
+        answers.engineerName,
+        answers.engineerId,
+        answers.engineerEmail,
+        answers.engineerGithub
+      );
+      team.push(engineer);
+    }
+
+    // Create Intern instance if selected
+    if (answers.memberType === "Add an Intern") {
+      const intern = new Intern(
+        answers.internName,
+        answers.internId,
+        answers.internEmail,
+        answers.internSchool
+      );
+      team.push(intern);
+    }
+
+    // Call render function and create HTML
+    const renderedHTML = render(team);
+
+    // Write HTML to a file (team.html)
+    writeToFile(outputPath, renderedHTML);
   });
 }
 
