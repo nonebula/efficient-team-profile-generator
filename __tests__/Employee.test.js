@@ -8,19 +8,19 @@ test("Can instantiate Employee instance", () => {
 test("Can set name via constructor arguments", () => {
   const name = "Alice";
   const e = new Employee(name);
-  expect(e.name).toBe(name);
+  expect(e._name).toBe(name);
 });
 
 test("Can set id via constructor argument", () => {
   const testValue = 100;
   const e = new Employee("Foo", testValue);
-  expect(e.id).toBe(testValue);
+  expect(e._id).toBe(testValue);
 });
 
 test("Can set email via constructor argument", () => {
   const testValue = "test@test.com";
   const e = new Employee("Foo", 1, testValue);
-  expect(e.email).toBe(testValue);
+  expect(e._email).toBe(testValue);
 });
 
 test("Can get name via getName()", () => {
