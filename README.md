@@ -1,10 +1,10 @@
 # efficient-team-profile-generator
-This is a working Node.js command-line application that takes in information about employees on a software engineering team, then generates an HTML webpage that displays summaries for each person.
+This is a functional Node.js command-line application designed to gather information about team members in a software engineering team and generate an HTML webpage displaying summaries for each person.
 
 ## Description 
-The goal of this project was to deliver a command-line application that makes use of Node to take user input and generate team cards based on the user input. The command-line takes in several conditions and utilised Jest testing to ensure design goals were met.
+The primary objective of this project was to create a command-line application using Node.js to collect user input and dynamically generate team cards based on that input. The application incorporates Jest testing to ensure the fulfillment of design goals.
 
-Due to the nature of this project, there was no creation of html or css elements and I did not format the html page in any way other than was provided as a starter template. As such, the homepage displays the README file.
+Given the project's nature, no additional HTML or CSS elements were created, and the provided starter template was used without additional formatting. Consequently, the README file is displayed on the homepage.
 
 **https://nonebula.github.io/efficient-team-profile-generator**
 
@@ -34,7 +34,7 @@ To navigate to the relevant section of the website, open the console using the '
 
 ## Tests 
 
-The tests can be ran through typing 'npm test' into the command-line.
+Run tests by typing 'npm test' into the command-line.
 
 ## Credits
 
